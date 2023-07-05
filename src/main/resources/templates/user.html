@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Админ панель</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/common.css}" rel="stylesheet"/>
+</head>
+<body class="bg-body-tertiary">
+<header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <div class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white">
+        <span class="fw-bold" th:text="${user.username}"></span>
+        with roles: <span th:each="role : ${user.roles}"> <span th:text="${role}"> </span></span>
+    </div>
+
+    <ul class="navbar-nav flex-row d-md px-4">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link text-white" href="/logout">Logout</a>
+        </li>
+    </ul>
+</header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="sidebar col-md-3 col-lg-2 p-0 mt-5 mb-0 bg-body">
+            <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+                <ul class="nav flex-column nav-pills">
+                    <th:block th:if='${user.isAdmin()}'>
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center gap-2" id="admin" href="/admin/">
+                                Admin
+                            </a>
+                        </li>
+                    </th:block>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center gap-2 active" id="user" href="/user">
+                            User
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mt-3 mb-0">
+            <h2>User information-page</h2>
+            <div class="card rounded-1">
+                <h5 class="card-header">
+                    About user
+                </h5>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td th:text="${user.getId()}"></td>
+                                <td th:text="${user.getName()}"></td>
+                                <td th:text="${user.getLastName()}"></td>
+                                <td th:text="${user.getAge()}"></td>
+                                <td th:text="${user.getUsername()}"></td>
+                                <td th:each="role : ${user.getRoles()}"><span th:text="${role}"> </span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/common.js}"></script>
+</body>
+
+</html>
